@@ -3,4 +3,4 @@ layout: home
 title: homepage
 ---
 
-Welcome to my blog!
+Welcome to the homepage for project_title
