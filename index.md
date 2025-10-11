@@ -1,6 +1,6 @@
 ---
 layout: home
-title: homepage
+title: Home
 ---
 
 Welcome to the homepage for the project: Deformation-Aware Mechanical Structure Generation.
