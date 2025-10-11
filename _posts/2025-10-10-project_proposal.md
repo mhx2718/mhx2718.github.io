@@ -4,7 +4,7 @@ title: "Project Proposal"
 date: 2025-10-10 21:00:00 +0800
 tags: [new]
 ---
-Project Proposal for "Deformation-Aware Mechanical Structure Generation"
+# Project Proposal for "Deformation-Aware Mechanical Structure Generation"
 
 This project aims to build a conditional generative model that produces metamaterial unit-cell structures meeting specified mechanical properties (e.g., stiffness targets, anisotropy, bandgap surrogates) while reserving manufacturability and connectivity. Unlike traditional architected families—truss, plate, shell, spinodoid—that are largely implicit and limited in expressivity, explicit geometric representations (e.g., voxel/pixel grids, point clouds, meshes) offer greater design freedom and can capture both regular and irregular geometries, enabling broader exploration of structure–property space. State-of-the-art approaches typically adapt image-based denoising diffusion models to generate discretized structures from Gaussian noise. Despite strong visual performance, these methods usually require large training corpora and hardly handle topology, connectivity, or fabrication constraints during generation.
 
