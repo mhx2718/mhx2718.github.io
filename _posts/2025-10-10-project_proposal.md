@@ -12,17 +12,21 @@ Metamaterial performance depends not only on what is present but also on how it 
 
 The novelty lies in reinterpreting denoising not as generic image restoration but as explicit structural deformation under property-aware conditioning and manufacturability guidance. By operating on explicit geometric representations and deformations, the generator is expected to learn from the data more efficiently, facilitating the enforcement of feasibility constraints beyond what conventional image-style diffusion pipelines typically achieve. Finally, by observing the evolving process, a certain level of interpretability is expected to be obtained.
 
-Goals:
-  •	Update 1
-    o	Literature review
-    o	Finding a dataset of 2D metamaterial/structure with corresponding mechanical properties
-    o	Determine on design representation (e.g., mesh, pixel, or others)
-  •	Update 2
-    o	Determine the representation of material growth/deformation process
-    o	Handling engineering constraints
-  •	Update 3
-    o	Design and train the diffusion model
-    o	Design and execute experiments to test performance
-  •	Additional goals
-    o	Benchmark with baselines
-    o	Extend the framework to 3D
+# Goals
+
+- **Update 1**
+  - Literature review
+  - Finding a dataset of 2D metamaterial/structure with corresponding mechanical properties
+  - Determine design representation (e.g., mesh, pixel, or others)
+
+- **Update 2**
+  - Determine the representation of material growth/deformation process
+  - Handling engineering constraints
+
+- **Update 3**
+  - Design and train the diffusion model
+  - Design and execute experiments to test performance
+
+- **Additional goals**
+  - Benchmark with baselines
+  - Extend the framework to 3D
