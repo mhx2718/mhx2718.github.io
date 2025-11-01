@@ -16,8 +16,8 @@ approaches such as finite element (FE) analysis, to fully unlock the potential i
 designing metamaterial structures to meet certain properties or engineering requirements is needed,
 but it still remains a challenge as an ill-posed inverse problem.
 
-## Generation strategies
-Conventional gradient-based topology optimizationSigmund and Maute [2013], Wang et al. [2014]
+### Generation strategies
+Conventional gradient-based topology optimization Sigmund and Maute [2013], Wang et al. [2014]
 are prevalently used to address this problem, being especially efficient for high-dimensional design
 problems with a smooth objective function. Its applications, however, can be hindered by reliance
 on iterations of time-consuming discretization method and instability for non-convex objective
@@ -29,9 +29,9 @@ prematurely.
 
 In recent years, deep generative frameworks have emerged as powerful solutions due to their superior capa
 bility of modeling complex mapping relations. Methods such as conditional Generative Adverserial
-Network (cGAN)Goodfellow et al. [2020], Li et al. [2018], Yang et al. [2021], flow-based modelsDinh
+Network (cGAN) Goodfellow et al. [2020], Li et al. [2018], Yang et al. [2021], flow-based models Dinh
 et al. [2014, 2016], Kingma and Dhariwal [2018], Papamakarios et al. [2021], Guan et al. [2021], and
-conditional Variational Auto Encoder (cVAE)Kingma and Welling [2013], Ma et al. [2019] are proved
+conditional Variational Auto Encoder (cVAE) Kingma and Welling [2013], Ma et al. [2019] are proved
 to succeed in metamaterial design tasks by providing single-shot generation of various structures.
 These methods holds different advantages and therefore are alternative solutions for different tasks.
 For example, Flow-based models transform a simple gaussian distribution into a more complex
@@ -57,7 +57,7 @@ generative framework, their application has extended to a broader scope, such as
 et al. [2022], Liu et al. [2023], protein design Watson et al. [2023], trajectory planning Janner et al.
 [2022], and medical imaging Chung and Ye [2022].
 
-## Exploring structure representation
+### Exploring structure representation
 The design representation of metamaterial’s cellular structure under deep generative frameworks can
 be divided into two class: implicit and explicit. Implicit geometry representations of metamaterial
 are majorly parameterizations for regularized unit cell structures such as truss, plate, shell, and
@@ -67,7 +67,7 @@ in truss lattice induces compliant deformation mode in both stretching and bendi
 account for its poor scaling of stiffness and strength with relative density.
 Plate-based metamaterials showcase superior mass-specific stiffness than truss and the their
 elastically-isotropic response can reach the theoretical limit of Young’s modulus, defined by the
-Hashin-Shtrikman boundHashin and Shtrikman [1963], Berger et al. [2017]. However, both structures
+Hashin-Shtrikman bound Hashin and Shtrikman [1963], Berger et al. [2017]. However, both structures
 suffer from stress concentration at the junction of members, which induces premature failure, and
 therefore renders undesirable recoverability. Shell lattices, including triply periodic minimal surfaces
 (TPMSs), address the stress concentration and recoverability issue by providing smooth inner-cell
@@ -78,9 +78,9 @@ mechanical properties are highly susceptible to manufacturing imperfections and 
 roughness and waveness) which can be unavoidably introduced in massive-scale fabrication.
 Spinodal metamaterials were explored as a non-periodic architectures which showcase robustness to
 manufacturing uncertainties Hsieh et al. [2019]. The structure is designed to emulate the structure
-patterns observed during spinodal phase separation in solid solution metals and polymer blendsHodge
+patterns observed during spinodal phase separation in solid solution metals and polymer blends Hodge
 et al. [2007], Lee and Mohraz [2010]. This type of material structure is proven to have excellent
-energy absorption, resilience, and near-optimal scaling of specific stiffnessGuell Izard et al. [2019],
+energy absorption, resilience, and near-optimal scaling of specific stiffness Guell Izard et al. [2019],
 Portela et al. [2020]. These implicit architecture representations are usually mutually exclusive
 in design tasks, i.e., design frameworks that output a certain type of implicit geometry can only
 generate designs under this category without significantly altering the setup. To overcome this
@@ -91,7 +91,7 @@ details and degree of freedom, explicit representation generally increases model
 the dimensionality of design space elevates, which can be intractable to learn and data-intensive,
 therefore works are done in compromise between computational complexity and performance.
 
-## Recent work on explicit-form structure generation
+### Recent work on explicit-form structure generation
 Most of the studies in inverse designing voxel-based metamaterials are confined to a limited design space:
 either 2D pixels (image) Bastek and Kochmann [2023], Wang et al. [2024] or low-resolution 3D
 structures Yang and Buehler [2023]. Vlassis et al. firstly applies denoising diffusion probabilistic
@@ -104,7 +104,7 @@ learning of the corresponding discretized stress–strain response. Also, by cre
 Gaussian random field on a higher 96 × 96 grid, they further expand the study to more complex
 mechanical behavior, such as frictional contact and buckling. Yang et al. applied a transformer-based
 GAN to predict complete 3D mechanical fields from input 2D field images and reconstruct composite
-geometry; however, it is tested only under a 8 × 8 grid design space. Though there are a few
+geometry; however, it is tested only under an 8 × 8 grid design space. Though there are a few
 studies extending to high-dimensional voxel representation, they mainly focus on linear material
 properties Yang et al. [2024], Zheng et al. [2025]. Yang et al. trained a conditional diffusion model on
 3D voxel dataset and realize fast generation of delicate microstructures with the bulk modulus, shear
@@ -133,7 +133,7 @@ data and computation overhead.
 
 
 
-# References
+### References
 - Jan-Hendrik Bastek and Dennis M Kochmann. Inverse design of nonlinear mechanical metamaterials via video denoising diffusion models. Nature Machine Intelligence, 5(12):1466–1475, 2023.
 - Jens Bauer, Almut Schroer, Ruth Schwaiger, and Oliver Kraft. Approaching theoretical strength in glassy carbon nanolattices. Nature materials, 15(4):438–443, 2016.
 - JB Berger, HNG Wadley, and RM McMeeking. Mechanical metamaterials at the theoretical limit of
