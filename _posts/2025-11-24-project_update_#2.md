@@ -4,24 +4,24 @@ title: "Project Update #2"
 date: 2025-11-24 21:00:00 +0800
 tags: [new]
 ---
-Since Update 1, I replaced the SDF-diffusion idea with a deformation-aware, flow-based model that better matches the constraints and periodicity of unit cells. More specifically, I work on the periodic cell and learn a velocity field whose flow transports a fixed, connected “template” mask into the final design. I switched to a flow-based framework over diffusion based on a paper by Lipman et al. 2023[1]. This paper explores employing flow matching between noise and data, following paths defined by Optimal Transport (OT) displacement interpolation. I deemed this work as a reference for methodology because by regarding the material as a distribution, the generation of data from noise can be emulated by moving the original distribution to the target. Based on the paper, training a flow-based model can also provide faster training and sampling. 
+Since Update 1, I replaced the SDF-diffusion idea with a deformation-aware, flow-based model that better matches the constraints and periodicity of unit cells. More specifically, I work on the periodic cell and learn a velocity field whose flow transports a fixed, connected template mask into the final design. I switched to a flow-based framework over diffusion based on a paper by Lipman et al. 2023[1]. This paper explores employing flow matching between noise and data, following paths defined by Optimal Transport (OT) displacement interpolation. I deemed this work as a reference for methodology because by regarding the material as a distribution, the generation of data from noise can be emulated by moving the original distribution to the target. Based on the paper, training a flow-based model can also provide faster training and sampling. 
 
 The field is parameterized by a stream function $\psi$ in the Fourier domain, so the velocity
-$v=\nabla^\perp\psi=(\partial_y\psi,-\partial_x\psi)$ is inherently incompressible $(\nabla\!\cdot v=0)$ and periodic.
+$v=\nabla^\perp\psi=(\partial_y\psi,-\partial_x\psi)$ is inherently incompressible $(\nabla\cdot v=0)$ and periodic.
 We expand
 $$
-  \psi(x)=\sum_{k\in\mathcal K}\widehat\psi(k)\,e^{i2\pi k\cdot x},\qquad
+  \psi(x)=\sum_{k\in\mathcal K}\widehat\psi(k)\,e^{i2\pi k\cdot x},
   \mathcal K=\{\,k\in\mathbb Z^2:\ \|k\|_\infty\le K_{\max}\,\},
 $$
 which controls smoothness and sets a minimum feature scale via $\lambda_{\min}\approx 1/K_{\max}$.
 Connectivity is preserved by design: the template $E_0\subset\mathbb T^2$ contains two wrap-around
-bands (one per lattice direction) with specified topology and then performs diffeomorphic transport $\Phi_t$ (solving
-$\dot\Phi_t(x)=v(\Phi_t(x),t),\ \Phi_0=\mathrm{Id}$) keeps this topology intact.
+bands (one per lattice direction) with specified topology, and then performs diffeomorphic transport by solving
+$\dot\Phi_t(x)=v(\Phi_t(x),t),\ \Phi_0=\mathrm{Id}$ to keeps this topology intact.
 
 Training uses flow matching with an OT-based target: for each sample I can solve for the OT path between the template and the design (this process may take some time), $\tilde T$. Along the straight path $x_t=(1-t)y+t\,\tilde T(y)$ the reference velocity is
 $v^\*(x_t)=\tilde T(y)-y$. I regress the model velocity $v_\theta$ to the divergence-free projection of $v^\*$ via
 $$
-  \min_\theta\ \mathbb E\big\|\,v_\theta(x_t,t)-\Pi_{\mathrm{div}=0}[v^\*(x_t)]\,\big\|^2.
+  \min_\theta\ \mathbb E\big\|\,v_\theta(x_t,t)-\Pi_{\mathrm{div}=0}[v^{\*}(x_t)]\,\big\|^2.
 $$
 At sampling time, I integrate the learned field with an area-preserving (symplectic) scheme so that
 $\det D\Phi_t\equiv 1$ and the volume fraction $|\Phi_t^{-1}(E_0)|=|E_0|$ is conserved up to discretization.
@@ -34,6 +34,7 @@ Looking ahead to completion, I will finalize the deformation encoding (band limi
 [1] Yaron Lipman, Ricky T. Q. Chen, Heli Ben-Hamu, Maximilian Nickel, and Matthew Le. Flow
 matching for generative modeling. In The Eleventh International Conference on Learning Repre-
 sentations, 2023.
+
 [2] Qibang Liu, Seid Koric, Diab Abueidda, Hadi Meidani, and Philippe Geubelle. Toward signed
 distance function based metamaterial design: Neural operator transformer for forward prediction
 and diffusion model for inverse design. Computer Methods in Applied Mechanics and Engineering,
