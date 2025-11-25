@@ -4,34 +4,31 @@ title: "Project Update #1"
 date: 2025-10-31 21:00:00 +0800
 tags: [new]
 ---
-Since the proposal, I completed a literature review on generative methods for mechanical metamateri-
-als and refined the problem framing accordingly. The review explores the structural representation
-for metamaterials and contrasts topology optimization and evolutionary strategies with generative
-models, including conditional GANs, VAEs, flow-based approaches, and diffusion models. It supports
-a constraint-aware, diffusion-oriented pipeline on pixel-based structural design, when the target is a
-nonlinear stress–strain response.
+The field is parameterized by a stream function $\psi$ in the Fourier domain, so the velocity
+$v=\nabla^\perp\psi=(\partial_y\psi,-\partial_x\psi)$ is inherently incompressible $(\nabla\!\cdot v=0)$ and $1$-periodic.
+We expand
+\[
+  \psi(x)=\sum_{k\in\mathcal K}\widehat\psi(k)\,e^{i2\pi k\cdot x},\qquad
+  \mathcal K=\{\,k\in\mathbb Z^2:\ \|k\|_\infty\le K_{\max}\,\},
+\]
+which controls smoothness and sets a minimum feature scale via $\lambda_{\min}\approx 1/K_{\max}$.
+Connectivity is preserved by design: the template $E_0\subset\mathbb T^2$ contains two wrap-around
+bands $B_x,B_y$ (one per lattice direction), and the diffeomorphic transport $\Phi_t$ (solving
+$\dot\Phi_t(x)=v(\Phi_t(x),t),\ \Phi_0=\mathrm{Id}$) keeps this topology intact, yielding the final design
+\[
+  X(x)=\mathbf 1_{\{\Phi_1(x)\in E_0\}}.
+\]
 
-For data, I have selected a pixel-based 2D metamaterial dataset given by Bastek and Kochmann [2023].
-This dataset pairs each unit-cell design with full-field mechanical responses evaluated over multiple
-strain steps up to 20% compressive strain. This dataset is large-scale and crafted to capture complex
-nonlinear effects such as contact and post-buckling. It aligns with my proposal’s requirements and
-allows me to focus on model design and evaluation rather than data generation.
-Given the dataset’s structure, I treat the structural representation as signed distance field (SDF) pixels
-so that given a random topology as the initial “noise”, the diffusion model is scheduled to reconstruct
-it toward a feasible structure guided by a target stress–strain curve. Specifically, I assume to employ
-a transport/flow-matching formulation in SDF space that predicts a velocity field moving an initial
-random field toward a manufacturable topology; this route can intuitively accommodate smoothness
-and minimum-thickness priors. This is because, first, the smoothness can be controlled by adding a
-regularization term for the curvature of the SDF interface; the minimum thickness constraint can be
-guaranteed by comparing local distance to a user-defined minimum thickness; I did not think of a
-good way to control the connectivity, but it will be interesting to further investigate it. I will start
-with this SDF transport strategy and may consider other options if there are technical challenges.
+Training uses flow matching with an OT-based target: for each sample, I solve a periodic Sinkhorn problem to obtain a smooth
+barycentric OT map $\tilde T$; along the straight path $x_t=(1-t)y+t\,\tilde T(y)$ the reference velocity is
+$v^\*(x_t)=\tilde T(y)-y$. I regress the model velocity $v_\theta$ to the divergence-free projection of $v^\*$ via
+\[
+  \min_\theta\ \mathbb E\big\|\,v_\theta(x_t,t)-\Pi_{\mathrm{div}=0}[v^\*(x_t)]\,\big\|^2
+  \quad (+\ \text{spectral/Sobolev regularization on } \widehat\psi).
+\]
+At sampling time, I integrate the learned field with an area-preserving (symplectic) scheme so that
+$\det D\Phi_t\equiv 1$ and the volume fraction $|\Phi_t^{-1}(E_0)|=|E_0|$ is conserved up to discretization.
 
-My proposal listed three intermediate goals for this stage: completing the literature review, selecting a
-dataset with paired 2D structures and mechanical responses, and determining a design representation.
-The literature review is complete. The dataset has been chosen with a clear rationale based on scale,
-format, and coverage of complex effects. The representation is also determined: SDF pixels with
-continuous representations for constraint handling and smoothing.
 
 ### Plan for Completion
 The overall objective remains unchanged: given a target stress–strain curve, generate a 2D pixelated
