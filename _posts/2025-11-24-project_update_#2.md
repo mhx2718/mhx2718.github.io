@@ -16,9 +16,9 @@ $$
 which controls smoothness and sets a minimum feature scale via $\lambda_{\min}\approx 1/K_{\max}$.
 Connectivity is preserved by design: the template $E_0\subset\mathbb T^2$ contains two wrap-around
 bands (one per lattice direction) with specified topology, and then performs diffeomorphic transport by solving
-$\dot\Phi_t(x)=v(\Phi_t(x),t),\ \Phi_0=\mathrm{Id}$ to keeps this topology intact.
+$\dot\Phi_t(x)=v(\Phi_t(x),t)$ to keeps this topology intact.
 
-Training uses flow matching with an OT-based target: for each sample I can solve for the OT path between the template and the design (this process may take some time), $\tilde T$. Along the straight path $x_t=(1-t)y+t\,\tilde T(y)$ the reference velocity is
+Training uses flow matching with an OT-based target: for each sample I can solve for the OT path between the template and the design $\tilde T$. Along the straight path $x_t=(1-t)y+t\,\tilde T(y)$ the reference velocity is
 $v^\*(x_t)=\tilde T(y)-y$. I regress the model velocity $v_\theta$ to the divergence-free projection of $v^\*$ via
 $$
   \min_\theta\ \mathbb E\big\|\,v_\theta(x_t,t)-\Pi_{\mathrm{div}=0}[v^{\*}(x_t)]\,\big\|^2.
